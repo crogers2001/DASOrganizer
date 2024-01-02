@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Bellyache",
+    "length": "2:24",
+    "choreographer": {
+      "name": "Melanie",
+      "email": "mel@gmail.com",
+      "phone": "1234567890",
+      "dues": false
+    },
+    "dancers": ""
+  },
+  {
+    "name": "Mo Bamba",
+    "length": "2:14",
+    "choreographer": {
+      "name": "Katie",
+      "email": "katie@gmail.com",
+      "phone": "1234567891",
+      "dues": true
+    },
+    "dancers": ""
+  },
+  {
+    "name": "Sicko Mode",
+    "length": "1:59",
+    "choreographer": {
+      "name": "Sam",
+      "email": "sam@gmail.com",
+      "phone": "1234567892",
+      "dues": false
+    },
+    "dancers": ""
+  },
+  {
+    "name": "",
+    "length": "",
+    "choreographer": null,
+    "dancers": ""
+  }
+]
