@@ -1,3 +1,151 @@
 body {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3em;
+}
+
+.big-button {
+  display: block;
+  width: 15em;
+  height: 10vh;
+  border-radius: 30px;
+  border: none;
+  background-color: #FFC7DE;
+  margin-top: 5vh;
+  font-weight: bold;
+  font-size: 20px;
+  box-shadow: 5px 5px 10px rgba(194, 194, 248, 0.3);
+  font-family: 'Orienta', sans-serif;
+}
+
+.big-button:hover,
+.big-button:focus {
+  box-shadow: 5px 5px 10px rgba(194, 194, 248, 0.5);
+  cursor: pointer;
+}
+
+.small-button {
+  width: 12em;
+  height: 3em;
+  border-radius: 30px;
+  border: none;
+  background-color: #FFC7DE;
+  font-weight: bold;
+  margin: 1em 1em 0em 0em;
+  box-shadow: 5px 5px 5px rgba(194, 194, 248, 0.3);
+  font-family: 'Orienta', sans-serif;
+}
+
+.small-button:hover,
+.small-button:focus {
+  box-shadow: 5px 5px 5px rgba(194, 194, 248, 0.5);
+  cursor: pointer;
+}
+
+.small-button-row {
+  padding-left: 1em;
+}
+
+.submit-button {
+  width: 10em;
+  height: 6vh;
+  border-radius: 30px;
+  border: none;
+  background-color: #FFC7DE;
+  box-shadow: 5px 5px 10px rgba(194, 194, 248, 0.3);
+  font-family: 'Pacifico', cursive;
+  font-size: 18px;
+  margin-top: 1vh;
+}
+
+.form-container {
+  width: 15em;
+  margin-top: 1vh;
+  text-align: left;
+}
+
+.long-input {
+  background-color: rgb(224, 224, 224);
+  border: none;
+  width: 100%;
+  height: 3vh;
+  margin-bottom: 1vh;
+  margin-top: 1vh;
+}
+
+.short-input {
+  background-color: rgb(224, 224, 224);
+  border: none;
+  width: 3em;
+  height: 3vh;
+  margin-top: 1vh;
+  margin-right: 5px;
+}
+
+.fine-print {
+  font-size: 11px;
+  margin-bottom: 1vh;
+}
+
+.blank-space {
+  height: 6vh;
+}
+
+.bad-input {
+  background-color: rgb(230, 58, 58);
+  color: white;
+  border-radius: 10px;
+  text-align: left;
+  padding: 1em;
+  font-size: 14px;
+  margin-bottom: 1em;
+}
+
+.horizontal-whitespace {
+  margin-right: 1em;
+}
+.center-stuff {
+  text-align: center;
+}
+
+.thank-you {
+  margin-top: 6em;
+  padding: 1em;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.manage-header {
+  margin-bottom: 10px;
+}
+
+.manage-header h1 {
+  margin-bottom: 10px;
+}
+
+.manage-content-container {
+  display: flex;
+  width: 23em;
+}
+.dancer-box-container {
+  text-align: left;
+}
+
+.manage-content-container h5 {
+  margin-bottom: 8px;
+  margin-top: 0;
+}
+.dancer-box {
+  background-color: rgb(235, 235, 235);
+  border-radius: 10px;
+  width: 12em;
+  height: 20em;
+  margin-right: 1em;
+}
+
+.docs-list {
+  width: 10em;
+  text-align: left;
 }

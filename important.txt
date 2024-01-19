@@ -1,0 +1,30 @@
+
+BY TUESDAY:
+
+Big picture:
+    -Host frontend on S3
+    -Host backend on Elastic Beanstalk
+    X-Get a domain 
+    X-Figure out how much storage space is needed on the database
+
+Member:
+    -Connect pay dues link
+    
+Choreographer:
+    -Authentication for enrolling
+    -Authentication for entering choreo manager
+    -Direct to Manage Dance after creating dance
+
+
+COSTS:
+- $12 for first year of owning tamudas.com, $20 each year after (1/16/2024 purchased)
+- $0 for database (using MongoDB Atlas M0 Shared)
+
+
+
+DATABASE:
+    - around 20KB per PDF
+    - around 5MB per mp3
+    - per semester: 50 PDFs, 50 mp3's = 1 MB + 250MB 
+    - M0 should be fine as long as all of the PDF's and mp3s get deleted each sememester
+    * Upgrading to M2 will be better but cost $9/mo

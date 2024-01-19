@@ -12,6 +12,7 @@ are you supposed to search for the exact index of the dancer from the database a
 one entry? 
 
 
+FONTS: Orienta, Pacifico (cursive), 
 
 *Homepage:
 *

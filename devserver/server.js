@@ -1,72 +1,65 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import the cors middleware
-const fs = require('fs');
+const cors = require('cors');
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const { ObjectId } = require('mongodb');
 
 const app = express();
 const PORT = 3001;
 
-app.use(cors()); // Enable CORS for all routes
-
+app.use(cors());
 app.use(bodyParser.json());
 
+const uri = "mongodb+srv://crogers2001:Collincr3@dasorganizer.c8tw1p0.mongodb.net/?retryWrites=true&w=majority";
 
-// endpoint for saving dancer data
-app.post('/api/dancers', (req, res) => {
-  const newDancer = req.body;
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
-  console.log('Received POST request:', newDancer);
+const database = client.db('Master');
+
+app.post('/api/members', async (req, res) => {
+  const newMember = req.body;
+
+  console.log('Received POST request:', newMember);
 
   try {
-    const existingData = JSON.parse(fs.readFileSync('./data/dancers.json'));
-    existingData.push(newDancer);
-    fs.writeFileSync('./data/dancers.json', JSON.stringify(existingData, null, 2));
+    const result = await database.collection('members').insertOne(newMember);
 
-    console.log('Dancer added successfully:', newDancer);
+    console.log('Performance added successfully:', newMember);
 
-    res.json({ success: true, message: 'Dancer added successfully' });
+    res.json({ success: true, message: 'Performance added successfully', insertedId: result.insertedId });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-// endpoint for saving performance data
-app.post('/api/performances', (req, res) => {
+app.post('/api/performances', async (req, res) => {
   const newPerformance = req.body;
 
   console.log('Received POST request:', newPerformance);
 
   try {
-    const existingData = JSON.parse(fs.readFileSync('./data/performances.json'));
-    existingData.push(newPerformance);
-    fs.writeFileSync('./data/performances.json', JSON.stringify(existingData, null, 2));
+    const result = await database.collection('performances').insertOne(newPerformance);
 
     console.log('Performance added successfully:', newPerformance);
 
-    res.json({ success: true, message: 'Performance added successfully' });
+    res.json({ success: true, message: 'Performance added successfully', insertedId: result.insertedId });
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
-
-//endpoint to fetch existing dancers
-app.get('/api/dancers', (req, res) => {
-    try {
-      const existingData = JSON.parse(fs.readFileSync('./data/dancers.json'));
-      res.json({ success: true, data: existingData });
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ success: false, message: 'Internal server error' });
-    }
-  });
-
-  //endpoint to fetch existing performances
-app.get('/api/performances', (req, res) => {
+app.get('/api/members', async (req, res) => {
   try {
-    const existingData = JSON.parse(fs.readFileSync('./data/performances.json'));
+    const existingData = await database.collection('members').find().toArray();
     res.json({ success: true, data: existingData });
   } catch (error) {
     console.error('Error:', error);
@@ -74,6 +67,45 @@ app.get('/api/performances', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.get('/api/performances', async (req, res) => {
+  //use findOne instead of find to fetch a singular document
+  try {
+    const existingData = await database.collection('performances').find().toArray();
+    res.json({ success: true, data: existingData });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+app.get('/api/performances/:id', async (req, res) => {
+  const { id } = req.params; // Extract _id from the URL parameter
+
+  try {
+    const existingData = await database.collection('performances').findOne({ _id: new ObjectId(id) });
+
+    if (!existingData) {
+      // If no performance is found, return a 404 status
+      res.status(404).json({ success: false, message: 'Performance not found' });
+      return;
+    }
+
+    res.json({ success: true, data: existingData });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+app.listen(PORT, async () => {
+  try {
+    // Connect the client to the server
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+  }
   console.log(`Server is running on port ${PORT}`);
 });
