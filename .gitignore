@@ -1,5 +1,6 @@
 notes/
 server/server.js
+
 # Logs
 logs
 *.log
