@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json({ limit: '10mb' }));
 
 
-const uri = "mongodb+srv://crogers2001:Collincr3@dasorganizer.c8tw1p0.mongodb.net/?retryWrites=true&w=majority";
+const uri = "";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
