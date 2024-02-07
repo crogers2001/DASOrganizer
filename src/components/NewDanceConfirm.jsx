@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React  from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const NewDanceConfirm = () => {
@@ -8,15 +8,11 @@ const NewDanceConfirm = () => {
         navigate('/choreographer/find');
     }
 
-  useEffect(() => {
 
-  }, []);
-
-  //send user straight into their dance manager without needing to type in credentials
   return (
     <div>
-      <div className='thank-you'>Your dance is saved! You may now manage your dance:</div>
-      <button className='big-button' onClick={handleManageClick}>Manage Your Dance</button> 
+      <div className='thank-you'>Your dance is saved! You may now add dancers to your roster:</div>
+      <button className='big-button' onClick={handleManageClick}>Change Your Roster</button> 
     </div>
   );
 };

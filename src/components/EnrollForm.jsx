@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import HomeButton from './HomeButton';
 import Semester from './Semester.jsx';
 import EnrollConfirm from './EnrollConfirm'; // Adjust the import path as needed
+import { useNavigate } from 'react-router-dom';
 
 function EnrollForm() {
 
+  const navigate = useNavigate();
   const currSemester = Semester();
   const [dancer, setDancer] = useState({
     name: '',
     class: '',
     email: '',
     phone: '',
-    semester: currSemester
+    semester: currSemester,
+    active: true
   });
 
   const [memberData, setMemberData] = useState([]);
@@ -22,14 +25,13 @@ function EnrollForm() {
 
   const updateMemberData = (data) => {
     setMemberData(data); // Assuming the data is an array of dancers
-    console.log(data); // Log the data directly
   };
 
   useEffect(() => {
     // Fetch existing dancersArray from the server when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/members');
+        const response = await fetch('https://www.server.dastamu.com/api/members');
         const result = await response.json();
 
         if (result.success) {
@@ -132,7 +134,7 @@ function EnrollForm() {
   };
   
 
-  const sendToServer = async (e) => {
+  const sendToServer = async () => {
 
     try {
       const trimmedName = dancer.name.trim();
@@ -144,10 +146,11 @@ function EnrollForm() {
       class: dancer.class,
       email: trimmedEmail,
       phone: cleanedPhone,
-      semester: currSemester
+      semester: currSemester,
+      active: true
       };
 
-      const response = await fetch('http://localhost:3001/api/members', {
+      const response = await fetch('https://www.server.dastamu.com/api/members', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -167,6 +170,9 @@ function EnrollForm() {
     setDancer({ name: '', email: '', phone: ''});
   };
 
+  const handleBackButton = () => {
+    navigate('/member');
+  }
 
   return (
     <div>
@@ -174,6 +180,9 @@ function EnrollForm() {
         <EnrollConfirm />
       ) : (
         <div>
+          <button className='back-button' onClick={handleBackButton}>
+            <img src= "/back-arrow.svg" alt="Back" />
+          </button>
           <HomeButton />
           
           <div className='form-container'>
@@ -207,7 +216,7 @@ function EnrollForm() {
                   value={dancer.class}
                   onChange={handleChange}
                 >
-                  <option value="">Select Class...</option>
+                  <option value="">Select your class...</option>
                   <option value="Freshman">Freshman</option>
                   <option value="Sophomore">Sophomore</option>
                   <option value="Junior">Junior</option>

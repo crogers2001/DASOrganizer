@@ -15,12 +15,19 @@ function ChoreographerPage() {
       navigate('/choreographer/find');
     }
 
+    const handleBackButton = () => {
+      navigate('/');
+    }
+
     return (
-        <div>
+      <div>
+        <button className='back-button' onClick={handleBackButton}>
+          <img src= "/back-arrow.svg" alt="Back" />
+        </button>
         <HomeButton />
         <h1>Choreographer</h1>
-            <button className='big-button' onClick={handleNewDanceClick}>Create a New Dance for <Semester /></button>
-            <button className='big-button' onClick={handleManageClick}>Manage Your Dance</button>
+            <button className='big-button' onClick={handleNewDanceClick}>Create a New Dance <br /> for <Semester /></button>
+            <button className='big-button' onClick={handleManageClick}>Change Your <br /> Roster</button>
       </div>
     )
 }

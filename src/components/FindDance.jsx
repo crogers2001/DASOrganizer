@@ -29,7 +29,7 @@ function FindDance() {
     
         try {
             // Make a GET request to fetch performances with the given credentials
-            const response = await fetch(`http://localhost:3001/api/performances?email=${credentials.email}&passcode=${credentials.passcode}`);
+            const response = await fetch(`https://www.server.dastamu.com/api/performances?email=${credentials.email}&passcode=${credentials.passcode}`);
     
             if (!response.ok) {
                 console.error("An error occurred while fetching performances");
@@ -60,10 +60,15 @@ function FindDance() {
         }
     };
 
-
+    const handleBackButton = () => {
+        navigate('/choreographer');
+    }
 
     return (
         <div>
+            <button className='back-button' onClick={handleBackButton}>
+                <img src= "/back-arrow.svg" alt="Back" />
+            </button>
             <HomeButton />
             <div><Semester /></div>
 
@@ -89,7 +94,7 @@ function FindDance() {
                         <br />
                     </label>
                     <label>
-                        Passcode
+                        Passphrase
                         <br />
                         <input
                             className='long-input'
@@ -100,7 +105,7 @@ function FindDance() {
                         />
                         <br />
                     </label>
-                    <div className='fine-print'>Enter the passcode you made when you created the dance</div>
+                    <div className='fine-print'>If you forgot your passphrase, ask the president or vice president to give it to you.</div>
                     <div className='blank-space'></div>
                     <div className='center-stuff'>
                         <button className='submit-button' type="submit"> Find Dance </button>

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import NewDanceConfirm from './NewDanceConfirm.jsx';
 
 function PerformanceForm() {
+  const navigate = useNavigate();
   const currSemester = Semester();
   const [performance, setPerformance] = useState({
     name: '',
@@ -14,30 +15,36 @@ function PerformanceForm() {
     dancers: null,
     artist: '',
     passcode: '',
-    semester: currSemester
+    semester: currSemester,
+    songFile: null,
+    choreographerPacket: null,
+    choreographerContract: null,
+    lightingSheet: null,
+    videos: [],
+    costume: [],
+    color: '',
   });
 
   const [performanceArray, setPerformanceArray] = useState([]);
   const [dancerArray, setDancerArray] = useState([]);
   const [selectedChoreographer, setSelectedChoreographer] = useState(null);
-  const [selectedDancers, setSelectedDancers] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [inputFlag, setInputFlag] = useState("");
 
 
-  const updateMemberData = (data) => {
+  const updatePerformanceData = (data) => {
     setPerformanceArray(data); // Assuming the data is an array of dancers
-    console.log(data); // Log the data directly
   };
 
   useEffect(() => {
     // Fetch existing performanceArray from the server when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/performances');
+        const response = await fetch('https://www.server.dastamu.com/api/performances');
         const result = await response.json();
 
         if (result.success) {
-          updateMemberData(result.data); // Assuming the data is a valid array
+          updatePerformanceData(result.data); // Assuming the data is a valid array
         } else {
           console.error(result.message);
         }
@@ -54,7 +61,7 @@ useEffect(() => {
     // Fetch existing dancersArray from the server when the component mounts
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/members');
+        const response = await fetch('https://www.server.dastamu.com/api/members');
         const result = await response.json();
 
         if (result.success) {
@@ -94,21 +101,32 @@ useEffect(() => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
     
-    sendToServer(e);
-    setShowConfirmation(true);
+    const validMessage = checkValidity();
 
+    if (validMessage === "") {
+
+      try {
+        await sendToServer();
+        // Display Thank You message, navigate away
+        setShowConfirmation(true);
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+    else {
+      setInputFlag(validMessage);
+    }
   };
 
-  const sendToServer = async (e) => {
-
-    e.preventDefault();
+  const sendToServer = async () => {
   
     try {
-      const response = await fetch('http://localhost:3001/api/performances', {
+      const response = await fetch('https://www.server.dastamu.com/api/performances', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,17 +160,59 @@ useEffect(() => {
   //   return minutes * 60 + seconds;
   // };
 
+  const checkValidity = () => {
+    let flag = "";
+
+    if (!performance.choreographer) {
+      flag = "Please select the choreographer's name.";
+    }
+    else if (performance.name === '') {
+      flag = "Please enter the song title for your dance.";
+    } 
+    else if (performance.artist === '') {
+      flag = "Please enter the artist's name.";
+    } 
+    else if (performance.passcode === '') {
+      flag = "Please enter a passcode for your dance.";
+    }
+    else {
+      // Check if there is another performance with the same name and artist
+      const duplicatePerformance = performanceArray.find(
+        (p) => p.name === performance.name && p.artist === performance.artist
+      );
+  
+      if (duplicatePerformance) {
+        flag = duplicatePerformance.choreographer.name + " is already choreographing for this song! If this is you, please contact the president. Otherwise, please choose another song.";
+      }
+    }
+
+    setInputFlag(flag);
+    return flag;
+  };
+
+  const handleBackButton = () => {
+    navigate('/choreographer');
+  }
+
   return (
     <div>
       {showConfirmation ? (
         <NewDanceConfirm />
       ) : (
       <div>
+        <button className='back-button' onClick={handleBackButton}>
+          <img src= "/back-arrow.svg" alt="Back" />
+        </button>
       <HomeButton />
 
       <div className='form-container'>
 
       <h1>Create a new dance for <Semester /></h1>
+      
+      { inputFlag !== "" ? (
+        <div className='bad-input'>{inputFlag}</div>
+        ) : null
+      }
 
       <form onSubmit={handleSubmit}>
 
@@ -221,7 +281,7 @@ useEffect(() => {
           </label> */}
           <div className='blank-space'></div>
           <label>
-            Make a passcode:
+            Make a passphrase:
             <br />
             <input
               className='long-input'
@@ -233,7 +293,7 @@ useEffect(() => {
             <br />
           </label>
           <div className='center-stuff'>
-            <div className='fine-print'>This is so only you can view and manage your dance. DO NOT enter a password that is important to you as it will not be encrypted. Be sure to remember or write down this passcode. </div>
+            <div className='fine-print'>This is so only you can view and manage your dance. Do not enter a password that is important to you as it will be visible by the officers. </div>
 
             <button className='submit-button' type="submit"> Create Dance </button>
           </div>

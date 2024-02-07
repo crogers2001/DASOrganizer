@@ -16,7 +16,7 @@ function Splash () {
     };
 
     const handleOfficerClick = () => {
-        navigate('/officer');
+        navigate('/officer/signin');
     };
 
   return (

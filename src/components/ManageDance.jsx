@@ -16,7 +16,7 @@ const ManageDance = () => {
         // Convert objectID to a valid ObjectId
     
         // Make a GET request to fetch the performance with the given objectID
-        const response = await fetch(`http://localhost:3001/api/performances/${objectID}`);
+        const response = await fetch(`https://www.server.dastamu.com/api/performances/${objectID}`);
         
         if (!response.ok) {
           console.error("An error occurred while fetching performance data");
@@ -36,8 +36,31 @@ const ManageDance = () => {
     fetchPerformanceData();
   }, [objectID]); // Run the effect whenever objectID changes
 
+  const handleAddDancersClick = () => {
+    navigate(`/choreographer/manage/adddancers/${objectID}`);
+  };
+
+  const handleRemoveDancerClick = () => {
+    navigate(`/choreographer/manage/removedancer/${objectID}`);
+  };
+  
+  const handleContactADancerClick = () => {
+    navigate(`/choreographer/manage/contactdancer/${objectID}`);
+  };
+
+  const handleUploadDocumentsClick = () => {
+    navigate(`/choreographer/manage/upload/${objectID}`);
+  };
+
+  const handleBackButton = () => {
+    navigate('/choreographer');
+  }
+
   return (
     <div>
+      <button className='back-button' onClick={handleBackButton}>
+        <img src= "/back-arrow.svg" alt="Back" />
+      </button>
       <HomeButton />
       {dance && (
       <div>
@@ -49,20 +72,20 @@ const ManageDance = () => {
 
             <div>
               <div className='small-button-row'>
-                <button className='small-button'>
+                <button className='small-button' onClick={handleAddDancersClick}>
                   Add Dancers
                 </button>
-                <button className='small-button'>
+                <button className='small-button' onClick={handleRemoveDancerClick}>
                   Remove Dancers
                 </button>
               </div>
-              <div className='small-button-row'>
-                <button className='small-button'>
+              <div className='small-button-row' >
+                <button className='small-button' onClick={handleContactADancerClick}>
                   Contact a Dancer
                 </button>
-                <button className='small-button'>
-                  Upload Documents
-                </button>
+                  {/* <button className='small-button' onClick={handleUploadDocumentsClick}>
+                    Upload Documents
+                  </button> */}
               </div>
             </div>
             <div className='blank-space'></div>
@@ -70,19 +93,22 @@ const ManageDance = () => {
                 <div className='dancer-box-container'>
                   <h5>Current Dancers:</h5>
                   <div className='dancer-box'>
-                    {/* Display a list of the dancers in dance.dancers */}
-                    {dance.dancers && dance.dancers.map((dancer, index) => (
-                      <div key={index}>{dancer.name}</div>
-                      // You can display other dancer information as needed
-                    ))}
+                      {dance.dancers &&
+                          dance.dancers
+                              .slice() // Create a copy of the array to avoid mutating the original array
+                              .sort((a, b) => a.name.localeCompare(b.name)) // Sort dancers by name
+                              .map((dancer, index) => (
+                                  <div key={index}>{dancer.name}</div>
+
+                              ))}
                   </div>
                 </div>
 
-                <div className='docs-list'>
+                {/* <div className='docs-list'>
                   <div></div>
-                  <h5>Missing:</h5>
-                  <div>Missing items list</div>
-              </div>
+                  <h5>Documents due by ___:</h5>
+                  <div></div>
+              </div> */}
             </div>
 
 

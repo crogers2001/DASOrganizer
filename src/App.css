@@ -4,10 +4,11 @@ body {
   flex-direction: column;
   align-items: center;
   padding-top: 3em;
+  text-decoration: none;
 }
 
 .big-button {
-  display: block;
+  margin: 0 1em;
   width: 15em;
   height: 10vh;
   border-radius: 30px;
@@ -18,6 +19,7 @@ body {
   font-size: 20px;
   box-shadow: 5px 5px 10px rgba(194, 194, 248, 0.3);
   font-family: 'Orienta', sans-serif;
+  color: black;
 }
 
 .big-button:hover,
@@ -36,6 +38,7 @@ body {
   margin: 1em 1em 0em 0em;
   box-shadow: 5px 5px 5px rgba(194, 194, 248, 0.3);
   font-family: 'Orienta', sans-serif;
+  color: black;
 }
 
 .small-button:hover,
@@ -58,12 +61,56 @@ body {
   font-family: 'Pacifico', cursive;
   font-size: 18px;
   margin-top: 1vh;
+  color: black;
+}
+.submit-button:hover,
+.submit-button:focus {
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(194, 194, 248, 0.5);
+}
+
+.delete-button {
+  width: 10em;
+  height: 6vh;
+  border-radius: 30px;
+  border: none;
+  background-color: rgb(230, 58, 58);;
+  box-shadow: 5px 5px 10px rgba(194, 194, 248, 0.3);
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  margin-top: 1vh;
+  font-family: 'Orienta', sans-serif;
+}
+.delete-button:hover,
+.delete-button:focus {
+  cursor: pointer;
+  box-shadow: 5px 5px 10px rgba(194, 194, 248, 0.5);
+}
+.back-button {
+  position: absolute;
+  z-index: 99;
+  left: 10%;
+  height: 50px;
+  width: 50px;
+  border-radius: 100px;
+  border: none;
+}
+
+.back-button:hover,
+.back-button:focus {
+  box-shadow: inset  5px 2px rgba(0, 0, 0, 0.1);
 }
 
 .form-container {
   width: 15em;
   margin-top: 1vh;
   text-align: left;
+}
+
+.centered-form-container {
+  width: 15em;
+  margin-top: 1vh;
 }
 
 .long-input {
@@ -111,7 +158,7 @@ body {
 }
 
 .thank-you {
-  margin-top: 6em;
+  margin-top: 3em;
   padding: 1em;
   font-size: 40px;
   font-weight: bold;
@@ -128,9 +175,11 @@ body {
 .manage-content-container {
   display: flex;
   width: 23em;
+  margin-left: 8em;
 }
 .dancer-box-container {
   text-align: left;
+  margin-left: 1em;
 }
 
 .manage-content-container h5 {
@@ -143,9 +192,116 @@ body {
   width: 12em;
   height: 20em;
   margin-right: 1em;
+  padding-left: 10px;
+  padding-top: 10px;
+  overflow: auto;
 }
 
 .docs-list {
   width: 10em;
   text-align: left;
+}
+
+.search-input {
+  background-color: rgb(224, 224, 224);
+  border: none;
+  width: 204px;
+  height: 3vh;
+  margin-top: 1em;
+  border-radius: 10px 10px 0 0;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow: auto;
+}
+
+.search-list {
+  list-style-type: none; /* Remove bullet points */
+  border-radius: 0 0 10px 10px;
+  width: 230px;
+  max-height: 20vh;
+  overflow: auto;
+  margin-top: 0;
+  padding: 0;
+}
+
+.search-list li.even {
+  cursor: pointer;
+  padding: 5px 1em;
+  background-color: #ececec; /* Set the background color for even items */
+}
+
+.search-list li.odd {
+  cursor: pointer;
+  padding: 5px 1em;
+  background-color: #f7f7f7; /* Set the background color for odd items */
+}
+
+.undo-button {
+  border: none;
+  margin-top: 1em;
+  background-color: rgb(168, 219, 253);
+  box-shadow: 3px 3px 5px rgba(194, 194, 248, 0.3);
+  width: 6em;
+  height: 2em;
+  border-radius: 20px;
+  font-weight: bold;
+  color: black;
+  font-family: 'Orienta', sans-serif;
+}
+.undo-button:hover,
+.undo-button:focus {
+  box-shadow: 3px 3px 5px rgba(194, 194, 248, 0.5);
+  cursor: pointer;
+}
+
+.upload-item-container {
+  width: 100%;
+  border: 2px solid rgb(204, 204, 204);
+  border-radius: 10px;
+  margin: 2em 0;
+  box-shadow: 3px 3px 5px rgba(194, 194, 248, 0.3);
+  padding-bottom: 1em;
+}
+
+.upload-item-container h4 {
+  margin-bottom: 5px;
+}
+
+.submitted-msg {
+  color: #1dca2b;
+  padding: 5px;
+  margin: 0 50px 30px 50px;
+  font-weight: bold;
+  font-family: 'Orienta', sans-serif;
+}
+
+.missing-msg {
+  color: #faa506;
+  padding: 5px;
+  margin: 0 70px 30px 70px;
+  font-family: 'Orienta', sans-serif;
+}
+
+.upload-button {
+  background: linear-gradient(to top left, rgb(141, 209, 255), rgb(227, 244, 255));
+  margin: 1em 30px 10px 30px;
+  padding: 1.2em 2.5em;
+  border-radius: 30px;
+  font-weight: bold;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.download-button {
+  background-color: rgb(228, 228, 228);
+  margin: 1em 30px 10px 30px;
+  padding: 1em;
+  border-radius: 30px;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.top-gap {
+  margin-top: 30px;
+  font-size: 10px;
 }

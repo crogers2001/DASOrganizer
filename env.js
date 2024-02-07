@@ -1,0 +1,1 @@
+export const MONGODB_URI = 'your_mongodb_uri_here';
