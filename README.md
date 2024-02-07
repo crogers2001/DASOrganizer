@@ -1,5 +1,7 @@
 # DAS Dance Organizer
 
+Additional management functionality coming soon
+
 ## Demo
 
 
